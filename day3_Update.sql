@@ -103,13 +103,19 @@ SELECT * FROM urunler1;
 -- burada tum urunlerýn dedigi icin WHERE kullanmazsak tablonun tamamina uygulanacak.
 -- ====================================================================
 -- ORNEK7:urunler tablosundan Ali Veli’in aldigi urunun ismini, TEDARÝKCÝ TABLOSUNDA ÝRTÝBAT_ÝSMÝ 'Ayse Yilmaz' OLAN FÝRMANIN ÝSMÝ (FÝRMA_ÝSMÝ) ile degistiriniz.
-DROP TABLE 
+
+
 UPDATE urunler1
-SET urun_isim = (SELECT firma_ismi FROM tedarikciler1
-WHERE irtibat_ismi = 'Ayse Yilmaz')
-WHERE musteri_isim= 'Ali Veli';
+SET urun_isim = (SELECT firma_ismi FROM tedarikciler1 WHERE irtibat_ismi ='Adam Eve')
+WHERE musteri_isim= 'Ali Bak';
 SELECT * FROM urunler1;
--- burada hoca adam eve olarak yazdi fakat adam eve yukarilarda birkac kez update oldu. o yuzden hata verdi soruyu basta ayse yilmaz yapsaydý sorun olmayacakti.
--- asil onemli olan set kisiminda ( ) icindeki select from where kisimi.
+
+--ORNEK 8: LAPTOP SATIN ALAN MUSTERILERIN ISMINI APPLE'IN IRTIBAT ISMI ILE DEGISTIRIN
+
+UPDATE urunler1
+SET musteri_isim =  (SELECT irtibat_ismi FROM tedarikciler1 WHERE firma_ismi= 'Adam Eve')
+WHERE urun_isim= 'Laptop';
+SELECT * FROM urunler1;
+
 
 
