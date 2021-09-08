@@ -70,11 +70,11 @@ select * from tedarýkcýler;
 -- KISITLAMALAR (ORNEK3 - PRIMARY KEY )
 -- primary key null kabul etmez unique olmalidir.
 ----------------------------------------------------------------
-create table personel(
-id char(5) PRIMARY KEY,
-isim varchar(50) UNIQUE,
+CREATE TABLE personel(
+id CHAR(5) PRIMARY KEY,
+isim VARCHAR(50) UNIQUE,
 maas NUMBER(5) NOT NULL,
-ise_baslama date
+ise_baslama DATE
 );
   
 INSERT INTO personel VALUES('10001', 'Ahmet Aslan',7000, '13-04-2018');
@@ -95,16 +95,16 @@ Isim_soyisim varchar2(50),
 not_ort number(5,2), --98,56
 kayit_tarihi date -- 14-01-2021
 );
-?
+
 SELECT * FROM ogrenciler3;
-?
+
 INSERT INTO ogrenciler3 VALUES ('1234', 'hasan yaman',75.70,'14-01-2020');
 INSERT INTO ogrenciler3 VALUES (null, 'veli yaman',85.70,'14-01-2020'); -- id null olamaz
 INSERT INTO ogrenciler3 VALUES ('1234', 'Ali Can',55.70,'14-06-2020'); -- id benzersiz olmalý, daha önceverilen id kullanýlamaz
 INSERT INTO ogrenciler3 (isim_soyisim) VALUES ( 'Veli Cem'); -- id vermeden baþka þeyler vermeye geçemezsin, default null atar, buda primary ye uymaz
 INSERT INTO ogrenciler3 (ogrenci_id) VALUES ( '5687');
-?
-?
+
+
 --primary key alternatif yöntem
 --bu yontemde kisitlamaya istedigimiz ismi atayabiliriz
 

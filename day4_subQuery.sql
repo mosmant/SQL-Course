@@ -1,5 +1,6 @@
 ------SUBQUERY---------------
 --Sorgu icinde calisan sorguya subquery (alt sorgu) denir.
+-- VERILER DEGÝSMEZ SADECE SORGULANIR VE GETIRILIR. UPDATE VE DELETE KI GIBI VERI DEGISMEZ.
 
 -- bu benim yorumum parent child iliskisi olmayan 2 tablo icin kulllanilir. birbirleri ile ayni verileri iceren 2 sutundaki veriler ile baglanti kurmaya calisma yapmaya yarar.
 CREATE TABLE personel
@@ -53,7 +54,7 @@ WHERE sirket_adi IN(SELECT sirket FROM personel WHERE sehir='Ankara');
 --SELECT id,isim,maas
 --FROM personel
 --WHERE sirket='Honda';
--- bir tablodan tek deger getirebilmek icin ortalama AVG , toplam SUM, adet COUNT, MIN, MAX  gibi
+-- bir tablodan tek deger getirebilmek icin ortalama AVG , toplam SUM, adet COUNT, MIN, MAX  gibi AVG ORTALAMA
 -- fonksiyonlar kullanilir ve bu fonksiyonlara AGGREGATE FONKSIYONLAR denir
 ==============================================================================*/ 
 
@@ -82,6 +83,6 @@ FROM sirketler;
 -- ORNEK7: Her sirketin id’sini, ismini ve toplam kaç þehirde bulunduðunu
 -- listeleyen bir SORGU yazýnýz.
 
-SELECT sirket_id,sirket_adi,(select count(sehir) from personel where sirket_adi=sirket ) as sehir_sayisi
+SELECT sirket_id,sirket_adi,(SELECT COUNT(sehir) FROM personel WHERE sirket_adi=sirket ) AS sehir_sayisi
 FROM sirketler;
 
