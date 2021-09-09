@@ -36,17 +36,21 @@ CREATE TABLE mart_satislar
 --URUN_ID’lerini listeleyen ve ayný zamanda bu ürünleri MART ayýnda alan
 --MUSTERI_ISIM 'lerini listeleyen bir sorgu yazýnýz.  
   
-  SELECT urun_id, musteri_isim FROM MART_SATISLAR ms WHERE EXISTS (SELECT URUN_ID FROM NISAN_SATISLAR ns WHERE ns.URUN_ID=ms.URUN_ID);
+  SELECT urun_id, musteri_isim FROM MART_SATISLAR ms 
+  WHERE EXISTS (SELECT URUN_ID FROM NISAN_SATISLAR ns WHERE ns.URUN_ID=ms.URUN_ID);
  -- SELECT urun_id, musteri_isim FROM MART_SATISLAR ms WHERE urun_id IN (SELECT URUN_ID FROM NISAN_SATISLAR ns WHERE MART_SATISLAR.URUN_ID=nisan_satislar.urun_id); --IN daha yavas
  
 --ORNEK2: Her iki ayda da satýlan ürünlerin URUN_ISIM'lerini ve bu ürünleri
 --NÝSAN ayýnda satýn alan MUSTERI_ISIM'lerini listeleyen bir sorgu yazýnýz.
  
- SELECT urun_isim, musteri_isim FROM NISAN_SATISLAR ns WHERE EXISTS (SELECT URUN_ISIM FROM MART_SATISLAR ms WHERE ms.URUN_ISIM =ns.URUN_ISIM);
+ SELECT urun_isim, musteri_isim FROM NISAN_SATISLAR ns 
+ WHERE EXISTS (SELECT URUN_ISIM FROM MART_SATISLAR ms WHERE ms.URUN_ISIM =ns.URUN_ISIM);
  
 --ORNEK3: Her iki ayda da ortak olarak satýlmayan ürünlerin URUN_ISIM'lerini
 --ve bu ürünleri NÝSAN ayýnda satýn alan MUSTERI_ISIM'lerini listeleyiniz.
-SELECT urun_isim, musteri_isim FROM NISAN_SATISLAR ns WHERE NOT EXISTS (SELECT URUN_ISIM FROM MART_SATISLAR ms WHERE ms.URUN_ISIM=ns.URUN_ISIM);
+SELECT urun_isim, musteri_isim FROM NISAN_SATISLAR ns 
+WHERE NOT EXISTS (SELECT URUN_ISIM FROM MART_SATISLAR ms WHERE ms.URUN_ISIM=ns.URUN_ISIM);
+
 /*===================== IS NULL, IS NOT NULL, COALESCE(kulesk=birleþmek) ========================
     IS NULL, ve IS NOT NULL BOOLEAN operatörleridir. Bir ifadenin NULL olup
     olmadýðýný kontrol ederler.
@@ -108,7 +112,7 @@ SELECT * FROM insanlar;
    SIRALAMA yapmak için kullanýlýr.
    Syntax
    -------
-      ORDER BY sutun_adi ASC   -- ARTAN
+      ORDER BY sutun_adi ASC   -- ARTAN -- genelde asc yazmaya gerek yoktur. zaten order by yazildiginda artan ascending siralama yapar. 
       ORDER BY sutun_adi DESC  -- AZALAN
 =========================================*/
 CREATE TABLE kisiler
@@ -170,12 +174,12 @@ SELECT * FROM (SELECT * FROM kisiler
     
 -- ORNEK2: MAAs'i en DÜÞÜK 2 kiþinin bilgilerini listeleyen sorguyu yazýnýz.
 
---select * from kisiler order by maas fetch next 2 rows only; (bu yeni versiyonlarda calisiyor.)
+--SELECT * FROM kisiler Order By maas FETCH NEXT 2 ROWS ONLY; (bu yeni versiyonlarda calisiyor.)
 select * from (SELECT * from kisiler order by maas) where ROWNUM<3;
 
 --ORNEK3: MAAÞ'a göre sýralamada 4. 5. ve 6. kiþilerin bilgilerini listeleyen sorguyu yazýnýz.
 
---select * from kisiler order by maas desc offset 3 rows fetch next 3 rows only; (bu yeni versiyonlarda calisiyor.)
+--SELECT * FROM kisiler ORDER BY maas DESC OFFSET 3 ROWS FETCH NEXT 3 ROWS ONLY; (bu yeni versiyonlarda calisiyor.)
 SELECT * FROM(SELECT * FROM(SELECT *FROM kisiler ORDER BY maas DESC)
 WHERE ROWNUM <=6)
 WHERE ROWNUM <=3; -- eski versiyon cozumu 

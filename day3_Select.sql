@@ -108,9 +108,110 @@ WHERE maas = 4000 OR maas = 7000 OR maas=5000;
 SELECT * FROM personel
 WHERE isim IN('Veli Han','Ahmet Aslan');
 
+/*======================= SELECT - LIKE ======================================
+    NOT:LIKE anahtar kelimesi, sorgulama yaparken belirli patternleri
+    kullanabilmemize olanak saðlar.
+    SYNTAX:
+    -------
+    SELECT sutün1, sutün2,…
+    FROM  tablo_adý WHERE sütun LIKE pattern
+    PATTERN ÝÇÝN
+    -------------
+    %    ---> 0 veya daha fazla karakteri belirtir.
+    _    ---> Tek bir karakteri temsil eder.
+ ==================================================== */
+ 
+-- ORNEK ismi A harfi ile baslayanlari listele?
 
+ SELECT * FROM personel WHERE ýsim LIKE 'A%';
+ 
+ -- Ornek 9: ismi n harfi ile bitenleri listeleyiniz
+ 
+ SELECT * FROM personel WHERE isim LIKE'%n';
+?
+-- Ornek 10: isminin 2. harfi e olanlarý listeleyiniz
 
+ SELECT * FROM personel WHERE ýsim LIKE '_e%';
+?
+-- Ornek 11: isminin 2. harfi e olup diðer harflerinde y olanlarý listeleyiniz
 
+? SELECT * FROM personel WHERE isim LIKE '_e%y%';
 
+-- Ornek 12: ismi A ile baþlamayanlarý listeleyiniz
 
+ SELECT * FROM personel WHERE ýsim NOT LIKE 'A%';
+?
+-- Ornek 13:  isminde a harfi olmayanlarý listeleyiniz
+ 
+ SELECT * FROM personel WHERE isim NOT LIKE '%a%';
+?
+-- Ornek 14:  maaþýnýn son 2 hanesi 00 olmayanlarý listeleyiniz
+? 
+SELECT * FROM personel WHERE maas NOT LIKE '%00';
 
+-- Ornek 15:  maaþýnýn 4000 olmayanlarý listeleyiniz
+
+SELECT * FROM personel WHERE maas NOT LIKE '4000';
+
+--   ORNEK18: maaþý 5 haneli olanlarý listeleyiniz
+
+SELECT * FROM personel WHERE maas LIKE'_____';
+
+-- ORNEK20: 1. harfi A ve 7.harfi A olan personeli listeleyiniz.
+
+SELECT * FROM personel WHERE maas LIKE 'A_____a%';
+
+/*======================= SELECT - REGEXP_LIKE ================================
+    Daha karmaþýk pattern ile sorgulama iþlemi için REGEXP_LIKE kullanýlabilir.
+    Syntax:
+    --------
+    REGEXP_LIKE(sutun_adý, ‘pattern[] ‘, ‘c’ ] )
+             -- 'c' => case-sentisitive demektir ve default case-sensitive aktiftir.
+     -- 'i' => incase-sentisitive demektir.
+/* ========================================================================== */
+    CREATE TABLE kelimeler
+    (
+        id NUMBER(10) UNIQUE,
+        kelime VARCHAR2(50) NOT NULL,
+        harf_sayisi NUMBER(6)
+    );
+    INSERT INTO kelimeler VALUES (1001, 'hot', 3);
+    INSERT INTO kelimeler VALUES (1002, 'hat', 3);
+    INSERT INTO kelimeler VALUES (1003, 'hit', 3);
+    INSERT INTO kelimeler VALUES (1004, 'hbt', 3);
+    INSERT INTO kelimeler VALUES (1005, 'hct', 3);
+    INSERT INTO kelimeler VALUES (1006, 'adem', 4);
+    INSERT INTO kelimeler VALUES (1007, 'selim', 5);
+    INSERT INTO kelimeler VALUES (1008, 'yusuf', 5);
+    INSERT INTO kelimeler VALUES (1009, 'hip', 3);
+    INSERT INTO kelimeler VALUES (1010, 'HOT', 3);
+    INSERT INTO kelimeler VALUES (1011, 'hOt', 3);
+    INSERT INTO kelimeler VALUES (1012, 'h9t', 3);
+    INSERT INTO kelimeler VALUES (1013, 'hoot', 4);
+    INSERT INTO kelimeler VALUES (1014, 'haaat', 5);
+    
+-- ORNEK21: Ýçerisinde 'hi' bulunan kelimeleri listeleyeniz
+
+select *from kelimeler where kelime lýke '%hi%'; --1.yol
+
+select *from kelimeler where REGEXP_LIKE (kelime, 'hi');
+
+--ORNEK22: Ýçerisinde 'ot' veya 'at' bulunan kelimeleri listel buyuk kucuk harfe duyarsiz olacak.
+
+select *from kelimeler where REGEXP_LIKE (kelime, 'at|ot','i'); -- sql de veya yazilimi | seklindedir.
+
+--ORNEK24: 'ho' veya 'hi' ile baþlayan kelimeleri büyük-küçük harfe dikkat etmeksizin listeleyeniz
+
+select *from kelimeler where REGEXP_LIKE (kelime, '^ho|^hi','i'); -- ^ bu kullanim baslangic icin
+
+--ORNEK25: Sonu 't' veya 'm' ile bitenleri büyük-küçük harfe dikkat etmeksizin listeleyeniz
+
+select *from kelimeler where REGEXP_LIKE (kelime, 't$|m$','i'); -- $ bu kullanim bitis icin.
+
+--ORNEK26: h ile baþlayýp t ile biten 3 harfli kelimeleri büyük-küçük harfe dikkat etmeksizin listeleyeniz (like ile olmaz case sensitive 'h_t')
+
+select *from kelimeler where REGEXP_LIKE (kelime,'h[a-zA-Z0-9]t','i');  --[oa]vs biseyler yazarsak icindekiler de olabilir. 
+--bu kullaným bir ust konudaki like ile cozulemez cunku case sensitive kullanamýyoruz.
+
+--ORNEK28: Ýçinde m veya i veya e olan kelimelerin tüm bilgilerini listeleyiniz.
+select *from kelimeler where REGEXP_LIKE (kelime, 'm|i|e');  -- veya nin bu sekilde kullanimi 
