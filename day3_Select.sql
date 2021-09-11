@@ -128,25 +128,25 @@ WHERE isim IN('Veli Han','Ahmet Aslan');
  -- Ornek 9: ismi n harfi ile bitenleri listeleyiniz
  
  SELECT * FROM personel WHERE isim LIKE'%n';
-?
+
 -- Ornek 10: isminin 2. harfi e olanlarý listeleyiniz
 
  SELECT * FROM personel WHERE ýsim LIKE '_e%';
-?
+
 -- Ornek 11: isminin 2. harfi e olup diðer harflerinde y olanlarý listeleyiniz
 
-? SELECT * FROM personel WHERE isim LIKE '_e%y%';
+ SELECT * FROM personel WHERE isim LIKE '_e%y%';
 
 -- Ornek 12: ismi A ile baþlamayanlarý listeleyiniz
 
  SELECT * FROM personel WHERE ýsim NOT LIKE 'A%';
-?
+
 -- Ornek 13:  isminde a harfi olmayanlarý listeleyiniz
  
  SELECT * FROM personel WHERE isim NOT LIKE '%a%';
-?
+
 -- Ornek 14:  maaþýnýn son 2 hanesi 00 olmayanlarý listeleyiniz
-? 
+ 
 SELECT * FROM personel WHERE maas NOT LIKE '%00';
 
 -- Ornek 15:  maaþýnýn 4000 olmayanlarý listeleyiniz
@@ -192,26 +192,27 @@ SELECT * FROM personel WHERE maas LIKE 'A_____a%';
     
 -- ORNEK21: Ýçerisinde 'hi' bulunan kelimeleri listeleyeniz
 
-select *from kelimeler where kelime lýke '%hi%'; --1.yol
+    select *from kelimeler where kelime lýke '%hi%'; --1.yol
 
-select *from kelimeler where REGEXP_LIKE (kelime, 'hi');
+    select *from kelimeler where REGEXP_LIKE (kelime, 'hi');
 
 --ORNEK22: Ýçerisinde 'ot' veya 'at' bulunan kelimeleri listel buyuk kucuk harfe duyarsiz olacak.
 
-select *from kelimeler where REGEXP_LIKE (kelime, 'at|ot','i'); -- sql de veya yazilimi | seklindedir.
+    select *from kelimeler where REGEXP_LIKE (kelime, 'at|ot','i'); -- sql de veya yazilimi | seklindedir.
 
 --ORNEK24: 'ho' veya 'hi' ile baþlayan kelimeleri büyük-küçük harfe dikkat etmeksizin listeleyeniz
 
-select *from kelimeler where REGEXP_LIKE (kelime, '^ho|^hi','i'); -- ^ bu kullanim baslangic icin
+    select *from kelimeler where REGEXP_LIKE (kelime, '^ho|^hi','i'); -- ^ bu kullanim baslangic icin
 
 --ORNEK25: Sonu 't' veya 'm' ile bitenleri büyük-küçük harfe dikkat etmeksizin listeleyeniz
 
-select *from kelimeler where REGEXP_LIKE (kelime, 't$|m$','i'); -- $ bu kullanim bitis icin.
+    select *from kelimeler where REGEXP_LIKE (kelime, 't$|m$','i'); -- $ bu kullanim bitis icin.
 
 --ORNEK26: h ile baþlayýp t ile biten 3 harfli kelimeleri büyük-küçük harfe dikkat etmeksizin listeleyeniz (like ile olmaz case sensitive 'h_t')
 
-select *from kelimeler where REGEXP_LIKE (kelime,'h[a-zA-Z0-9]t','i');  --[oa]vs biseyler yazarsak icindekiler de olabilir. 
+    select *from kelimeler where REGEXP_LIKE (kelime,'h[a-zA-Z0-9]t','i');  --[oa]vs biseyler yazarsak icindekiler de olabilir. 
 --bu kullaným bir ust konudaki like ile cozulemez cunku case sensitive kullanamýyoruz.
 
 --ORNEK28: Ýçinde m veya i veya e olan kelimelerin tüm bilgilerini listeleyiniz.
-select *from kelimeler where REGEXP_LIKE (kelime, 'm|i|e');  -- veya nin bu sekilde kullanimi 
+
+    select *from kelimeler where REGEXP_LIKE (kelime, 'm|i|e');  -- veya nin bu sekilde kullanimi 
