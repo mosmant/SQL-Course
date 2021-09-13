@@ -195,6 +195,7 @@ ON siparisler.sirket_id= sirketler.sirket_id;
     INSERT INTO personel VALUES (7933,'ZEKI','MUHENDIS',7782,'26.01.1987',4300,60);
      
     SELECT * FROM personel;
+    commit; --- commit komutunu yazip RUN yapinca javaya aktariliyor.
     
 --  ORNEK1: SATIS ve MUHASEBE bolumlerinde calisan personelin isimlerini ve 
 -- bolumlerini, once bolum sonra isim sýralý olarak listeleyiniz
